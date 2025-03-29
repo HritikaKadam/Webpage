@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            width: 350px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #ff6699;
+            margin-bottom: 20px;
+        }
+
+        .bundle-option {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            position: relative;
+        }
+
+        .bundle-option .options {
+            display: none;
+            margin-top: 10px;
+            
+        }
+        
+
+        .selected {
+            border: 2px solid #ff6699;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background-color: #e7bac946;
+        }
+
+        .selected .options {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            
+        }
+         .options label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .options div {
+            display: flex;
+            flex-direction: column;
+            width: 48%;
+        }
+
+        .bundle-option label {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            
+        }
+
+        .price,
+        .discount {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+
+        .popular-badge {
+            background-color: #ff6699;
+            color: white;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 3px;
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            display: none;
+        }
+
+        .discount-badge {
+            background-color: #ff6699;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 10px;
+        }
+
+        select {
+            padding: 5px;
+            width: 100%;
+            
+        }
+
+        .shipping {
+            color: #ff6699;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .total {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .btn {
+            background-color: #ff6699;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #e05588;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>YAY! It's BOGO</h2>
+
+        <div class="bundle-option selected" onclick="selectBundle(this, 10, false)">
+            <label><input type="radio" name="bundle" checked> 1 Unit <span class="discount-badge">10% Off</span></label>
+            <div class="price"> $10.00 USD </br> <span style="text-decoration: line-through; color: #ccc;">$24.00 USD</span>
+            </div>
+            <div class="options">
+            <div>
+            <label>Size</label>
+            <select>
+                <option>S</option>
+                <option>M</option>
+                <option>L</option>
+            </select>
+            </div>
+            <div>
+            <label>Color</label>
+            <select>
+                <option>Colour</option>
+                <option>Black</option>
+                <option>White</option>
+                </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="bundle-option" onclick="selectBundle(this, 18, true)">
+            <label><input type="radio" name="bundle"> 2 Unit <span class="discount-badge">20% Off</span></label>
+            <div class="popular-badge">MOST POPULAR</div>
+            <div class="price">$18.00 USD <span style="text-decoration: line-through; color: #ccc;">$24.00 USD</span>
+            </div>
+            <div class="options">
+<div>
+    <label>Size</label>
+    <select>
+        <option>S</option>
+        <option>M</option>
+        <option>L</option>
+    </select>
+</div>
+<div>
+    <label>Color</label>
+    <select>
+        <option>Colour</option>
+        <option>Black</option>
+        <option>White</option>
+    </select>
+</div>
+            </div>
+        </div>
+
+        <div class="bundle-option" onclick="selectBundle(this, 24, false)">
+            <label><input type="radio" name="bundle"> 3 Unit <span class="discount-badge">30% Off</span></label>
+            <div class="price">$24.00 USD <span style="text-decoration: line-through; color: #ccc;">$24.00 USD</span>
+            </div>
+            <div class="options">
+                <div>
+                    <label>Size</label>
+                    <select>
+                        <option>S</option>
+                        <option>M</option>
+                        <option>L</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Color</label>
+                    <select>
+                        <option>Colour</option>
+                        <option>Black</option>
+                        <option>White</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="shipping">Free Delivery</div>
+        <div class="total">Total: <span id="total">$10.00 USD</span></div>
+
+        <button class="btn">+ Add to Cart</button>
+    </div>
+
+    <script>
+        function selectBundle(element, price, isPopular) {
+            document.querySelectorAll('.bundle-option').forEach(option => {
+                option.classList.remove('selected');
+                option.querySelector('.popular-badge')?.style.setProperty('display', 'none');
+            });
+            element.classList.add('selected');
+            if (isPopular) {
+                element.querySelector('.popular-badge').style.display = 'inline';
+            }
+            document.getElementById('total').innerText = `$${price}.00 USD`;
+        }
+    </script>
+</body>
+
+</html>
